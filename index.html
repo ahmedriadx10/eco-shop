@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eco Shop</title>
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./assets/eco-logo.png" type="image/x-icon">
 
   <!-- tailwind + dasiUI CDN -->
    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -30,7 +30,38 @@
 </head>
 <body>
   
-<header></header>
+<nav class="">
+<div class="navbar bg-base-100 shadow-sm px-2.5">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+
+      <li class="text-lg font-medium"><button class="active:bg-blue-500">Products</button></li>
+      <li class="text-lg font-medium"><button class="active:bg-blue-500">Cart</button></li>
+      
+      
+    
+      </ul>
+    </div>
+<h2 class="font-bold text-lg sm:text-2xl lg:text-3xl xl:text-4xl text-info ">Eco Shop <span><i class="fa-brands fa-opencart" style="color: rgb(0, 0, 0);"></i></span></h2>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal space-x-5">
+      <li class="text-lg font-medium">Products</li>
+      <li class="text-lg font-medium">Cart</li>
+      
+    </ul>
+  </div>
+  <div class="navbar-end">
+ <p class="flex items-center gap-2 text-xl"><i class="fa-solid fa-cart-shopping" style="color: rgb(0, 0, 0);"></i> <span class="badge badge-info text-white" id="cart-count-nav">10</span></p>
+  </div>
+</div>
+</nav>
 
 
 </body>
