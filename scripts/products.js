@@ -193,8 +193,8 @@ function renderCart(x) {
     const div = document.createElement("div");
     div.innerHTML = `
     
-    <h2 class=' text-7xl'><i class="text-blue-600 fa-solid fa-face-rolling-eyes"></i></h2>
-    <p class='font-semibold text-2xl'>Your cart is Empthy</p>
+    <h2 class=' text-7xl'><i class="text-info fa-solid fa-face-rolling-eyes"></i></h2>
+    <p class='font-semibold text-2xl '>Your cart is Empthy 🔔❗</p>
     `;
     userCartTotal.innerText = 0;
     cartStore.appendChild(div);
@@ -345,7 +345,7 @@ productsContainer.addEventListener("click", (e) => {
     const { id, name } = productsMiniDetails;
 
     specificProduct(Number(id));
-    showToastify(`${name} Add to cart successfull !`, true);
+    showToastify(`<span class='font-bold text-md'>${name}</span> <span class='font-medium'>Add to cart successfull !</span>`, true);
   }
 });
 
@@ -365,7 +365,7 @@ cartStore.addEventListener("click", (e) => {
 
     localStorage.setItem("cartStore", JSON.stringify(localStorageCartData));
 
-    showToastify(`${name} removed from your cart`);
+    showToastify(`<span class='font-bold text-md'>${name}</span> <span class='font-medium'>removed from your cart</span>`);
     renderCart(localStorageCartData);
   }
 });
@@ -374,9 +374,9 @@ function showToastify(toastData, success) {
   if (success) {
     const alertContainer = document.createElement("div");
     alertContainer.innerHTML = `
-<div class="toast toast-top toast-end">
+<div class="toast  toast-end toast-middle">
 
-  <div class="alert alert-success alert-soft">
+  <div class="alert alert-info ">
     <span>${toastData}</span>
   </div>
 </div>`;
@@ -384,15 +384,15 @@ function showToastify(toastData, success) {
     document.body.appendChild(alertContainer);
     setTimeout(() => {
       alertContainer.remove();
-    }, 2000);
+    }, 3000);
     return;
   }
 
   const alertContainer = document.createElement("div");
   alertContainer.innerHTML = `
-<div class="toast toast-top toast-end">
+<div class="toast toast-end toast-middle">
 
-  <div class="alert alert-warning alert-soft">
+  <div class="alert alert-warning ">
     <span>${toastData}</span>
   </div>
 </div>`;
