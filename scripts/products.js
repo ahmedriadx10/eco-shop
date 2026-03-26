@@ -11,13 +11,12 @@ const navCartCount = elementGive("cart-count-nav");
 
 let localStorageCartData = JSON.parse(localStorage.getItem("cartStore")) || [];
 async function getCategoryList() {
-
-  categoryLoading(true)
+  categoryLoading(true);
   const getCateList = await fetch(
     "https://dummyjson.com/products/category-list",
   );
   const convJsData = await getCateList.json();
-categoryLoading(false)
+  categoryLoading(false);
   categoryBtnsRender(convJsData);
 }
 
@@ -42,7 +41,7 @@ async function getAllProductsData() {
 
   const convertJsData = await productsData.json();
   const { products } = convertJsData;
-allProductsLoading(false)
+  allProductsLoading(false);
   renderProductsDataUI(products);
 }
 
@@ -148,15 +147,21 @@ tabButtonsContainer.addEventListener("click", (e) => {
   }
 });
 
-async function specificProduct(id, cartAdd) {
+async function specificProduct(id) {
   const product = await fetch(`https://dummyjson.com/products/${id}`);
   const convertProduct = await product.json();
 
-  if (cartAdd) {
-    addToCart(convertProduct);
-  } else {
-    modalCall(convertProduct);
-  }
+  addToCart(convertProduct);
+}
+
+async function specificProductForModal(id) {
+  modalInner.innerHTML=''
+  modalParent.showModal()
+ modalLoading(true)
+  const product = await fetch(`https://dummyjson.com/products/${id}`);
+  const convertProduct = await product.json();
+  modalLoading(false)
+  modalCall(convertProduct);
 }
 
 function addToCart(data) {
@@ -260,7 +265,8 @@ function modalCall(data) {
 
 `;
 
-  modalParent.showModal();
+
+
 }
 
 /**
@@ -332,13 +338,13 @@ productsContainer.addEventListener("click", (e) => {
   if (targetElement.classList.contains("card-details")) {
     const getId = targetElement.dataset.id;
 
-    specificProduct(Number(getId));
+   specificProductForModal(Number(getId));
   } else if (targetElement.classList.contains("cart-add-btn")) {
     const productsMiniDetails = targetElement.dataset;
 
     const { id, name } = productsMiniDetails;
 
-    specificProduct(Number(id), true);
+    specificProduct(Number(id));
     showToastify(`${name} Add to cart successfull !`, true);
   }
 });
@@ -405,19 +411,30 @@ function allProductsLoading(loading) {
     productsContainer.classList.add("hidden");
   } else {
     productsContainer.classList.remove("hidden");
-    productsLoading.classList.add('hidden')
+    productsLoading.classList.add("hidden");
   }
 }
 
+function categoryLoading(wanna) {
+  const categoryLoading = elementGive("category-loading");
+  if (wanna) {
+    categoryLoading.classList.remove("hidden");
+    categorButtonsContainer.classList.add("hidden");
+  } else {
+    categoryLoading.classList.add("hidden");
+    categorButtonsContainer.classList.remove("hidden");
+  }
+}
 
-function categoryLoading(wanna){
-  const categoryLoading=elementGive('category-loading')
+function modalLoading(wanna) {
+  const loading = elementGive("modal-loading");
+  
   if(wanna){
-categoryLoading.classList.remove('hidden')
-categorButtonsContainer.classList.add('hidden')    
-  }else{
-    categoryLoading.classList.add('hidden')
-    categorButtonsContainer.classList.remove('hidden')
+    loading.classList.remove('hidden')
+    modalInner.classList.add('remove')
+  }
+  else{
+    modalInner.classList.remove('hidden')
+    loading.classList.add('hidden')
   }
 }
-
