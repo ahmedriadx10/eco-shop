@@ -438,3 +438,24 @@ function modalLoading(wanna) {
     loading.classList.add('hidden')
   }
 }
+
+
+
+
+function cartView(destination){
+// here i used falsy that means if don't send any parameter that means undefined
+
+  if(destination){
+      productsArea.classList.remove('hidden')
+  cartArea.classList.add('hidden')
+  elementGive('products-btn').classList.add('btn-info')
+  elementGive('cart-btn').classList.remove('btn-info')
+    return
+  }
+  
+  productsArea.classList.add('hidden')
+  cartArea.classList.remove('hidden')
+  elementGive('products-btn').classList.remove('btn-info')
+  elementGive('cart-btn').classList.add('btn-info')
+
+}
