@@ -11,11 +11,13 @@ const navCartCount = elementGive("cart-count-nav");
 
 let localStorageCartData = JSON.parse(localStorage.getItem("cartStore")) || [];
 async function getCategoryList() {
+
+  categoryLoading(true)
   const getCateList = await fetch(
     "https://dummyjson.com/products/category-list",
   );
   const convJsData = await getCateList.json();
-
+categoryLoading(false)
   categoryBtnsRender(convJsData);
 }
 
@@ -34,10 +36,13 @@ function categoryBtnsRender(container) {
 getCategoryList();
 
 async function getAllProductsData() {
+  allProductsLoading(true);
+
   const productsData = await fetch("https://dummyjson.com/products");
 
   const convertJsData = await productsData.json();
   const { products } = convertJsData;
+allProductsLoading(false)
   renderProductsDataUI(products);
 }
 
@@ -329,13 +334,12 @@ productsContainer.addEventListener("click", (e) => {
 
     specificProduct(Number(getId));
   } else if (targetElement.classList.contains("cart-add-btn")) {
-    const productsMiniDetails = targetElement.dataset
+    const productsMiniDetails = targetElement.dataset;
 
-    const {id,name}=productsMiniDetails
-
+    const { id, name } = productsMiniDetails;
 
     specificProduct(Number(id), true);
-    showToastify(`${name} Add to cart successfull !`,true)
+    showToastify(`${name} Add to cart successfull !`, true);
   }
 });
 
@@ -345,10 +349,9 @@ cartStore.addEventListener("click", (e) => {
   const removeBtn = e.target;
 
   if (removeBtn.classList.contains("remove-btn")) {
-  const productsMiniDetails = removeBtn.dataset
+    const productsMiniDetails = removeBtn.dataset;
 
-    const {id,name}=productsMiniDetails
-
+    const { id, name } = productsMiniDetails;
 
     localStorageCartData = localStorageCartData.filter(
       (cart) => cart.id !== Number(id),
@@ -356,48 +359,65 @@ cartStore.addEventListener("click", (e) => {
 
     localStorage.setItem("cartStore", JSON.stringify(localStorageCartData));
 
-
-    showToastify(`${name} removed from your cart`)
+    showToastify(`${name} removed from your cart`);
     renderCart(localStorageCartData);
   }
 });
 
-
-function showToastify(toastData,success){
-
-if(success){
-  
-const alertContainer=document.createElement('div')
-alertContainer.innerHTML=`
+function showToastify(toastData, success) {
+  if (success) {
+    const alertContainer = document.createElement("div");
+    alertContainer.innerHTML = `
 <div class="toast toast-top toast-end">
 
   <div class="alert alert-success alert-soft">
     <span>${toastData}</span>
   </div>
-</div>`
+</div>`;
 
+    document.body.appendChild(alertContainer);
+    setTimeout(() => {
+      alertContainer.remove();
+    }, 2000);
+    return;
+  }
 
-
-document.body.appendChild(alertContainer)
-setTimeout(()=>{alertContainer.remove()},2000)
-return
-}
-
-const alertContainer=document.createElement('div')
-alertContainer.innerHTML=`
+  const alertContainer = document.createElement("div");
+  alertContainer.innerHTML = `
 <div class="toast toast-top toast-end">
 
   <div class="alert alert-warning alert-soft">
     <span>${toastData}</span>
   </div>
-</div>`
+</div>`;
+
+  document.body.appendChild(alertContainer);
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 2000);
+}
+
+function allProductsLoading(loading) {
+  const productsLoading = elementGive("products-loading");
+
+  if (loading) {
+    productsLoading.classList.remove("hidden");
+    productsContainer.classList.add("hidden");
+  } else {
+    productsContainer.classList.remove("hidden");
+    productsLoading.classList.add('hidden')
+  }
+}
 
 
-
-document.body.appendChild(alertContainer)
-setTimeout(()=>{alertContainer.remove()},2000)
-
-
-
+function categoryLoading(wanna){
+  const categoryLoading=elementGive('category-loading')
+  if(wanna){
+categoryLoading.classList.remove('hidden')
+categorButtonsContainer.classList.add('hidden')    
+  }else{
+    categoryLoading.classList.add('hidden')
+    categorButtonsContainer.classList.remove('hidden')
+  }
 }
 

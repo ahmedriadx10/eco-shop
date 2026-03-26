@@ -140,16 +140,39 @@
     <section class="max-w-7xl mx-auto w-[90%] py-20 space-y-10" id="products-area">
       <h2 class="text-center text-4xl font-bold">Our Products</h2>
 
-      <section class="grid lg:grid-cols-[200px_1fr] gap-12 lg:gap-0">
+      <section class="grid lg:grid-cols-[200px_1fr] gap-12 lg:gap-0 ">
         <!-- category buttons -->
-        <section id="category-btns" class="space-y-1 flex flex-wrap flex-row lg:flex-col">
+    <section>
+
+      <!-- category button loading -->
+        <div class="hidden" id="category-loading">
+       <div class="py-20  flex justify-center " >
+    <span class="loading loading-spinner text-info loading-xl"></span>
+      </div>
+  </div>
+
+          <section id="category-btns" class="space-y-1 flex flex-wrap flex-row  lg:flex-col">
           <button class="category-btn btn btn-info">All</button>
         </section>
+    </section>
 
-        <section
-          class="grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-3 gap-5 px-2"
+   <section class=" p-1">
+  <div class="hidden" id="products-loading">
+       <div class="py-20  flex justify-center " >
+    <span class="loading loading-spinner text-info loading-xl"></span>
+      </div>
+  </div>
+         <section
+          class=" grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-3 gap-5 px-2"
           id="all-products-container"
-        ></section>
+        >
+      
+      <!-- loading spinner -->
+
+     
+      
+      </section>
+   </section>
       </section>
     </section>
 
