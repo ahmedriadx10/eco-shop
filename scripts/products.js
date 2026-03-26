@@ -71,7 +71,7 @@ function renderProductsDataUI(x) {
     <p class="font-medium text-lg">Price: $${price}</p>
 
     <div class="card-actions justify-end">
-      <button data-id='${id}' class="cart-add-btn btn btn-info">Add to Cart</button>
+      <button data-id=${id} data-name='${title}' class="cart-add-btn btn btn-info">Add to Cart</button>
     </div>
   </div>
 </div>
@@ -204,7 +204,7 @@ function renderCart(x) {
 <h2 class="font-bold text-2xl">${title}</h2>
     <p class="font-medium flex justify-between text-lg">Quantity: <span>X<span>${quantity}</span></span></p>
     <p class="font-medium flex justify-between text-lg">price: <span>$<span>${price * quantity}</span></span></p>
-    <div class="flex justify-end py-2"><button data-id='${id}' class="remove-btn btn btn-info">Remove</button></div>
+    <div class="flex justify-end py-2"><button data-id='${id}' data-name='${title}'  class="remove-btn btn btn-info">Remove</button></div>
 </div> 
 
   `;
@@ -329,9 +329,13 @@ productsContainer.addEventListener("click", (e) => {
 
     specificProduct(Number(getId));
   } else if (targetElement.classList.contains("cart-add-btn")) {
-    const getId = targetElement.dataset.id;
+    const productsMiniDetails = targetElement.dataset
 
-    specificProduct(Number(getId), true);
+    const {id,name}=productsMiniDetails
+
+
+    specificProduct(Number(id), true);
+    showToastify(`${name} Add to cart successfull !`,true)
   }
 });
 
@@ -341,7 +345,10 @@ cartStore.addEventListener("click", (e) => {
   const removeBtn = e.target;
 
   if (removeBtn.classList.contains("remove-btn")) {
-    const id = removeBtn.dataset.id;
+  const productsMiniDetails = removeBtn.dataset
+
+    const {id,name}=productsMiniDetails
+
 
     localStorageCartData = localStorageCartData.filter(
       (cart) => cart.id !== Number(id),
@@ -349,6 +356,48 @@ cartStore.addEventListener("click", (e) => {
 
     localStorage.setItem("cartStore", JSON.stringify(localStorageCartData));
 
+
+    showToastify(`${name} removed from your cart`)
     renderCart(localStorageCartData);
   }
 });
+
+
+function showToastify(toastData,success){
+
+if(success){
+  
+const alertContainer=document.createElement('div')
+alertContainer.innerHTML=`
+<div class="toast toast-top toast-end">
+
+  <div class="alert alert-success alert-soft">
+    <span>${toastData}</span>
+  </div>
+</div>`
+
+
+
+document.body.appendChild(alertContainer)
+setTimeout(()=>{alertContainer.remove()},2000)
+return
+}
+
+const alertContainer=document.createElement('div')
+alertContainer.innerHTML=`
+<div class="toast toast-top toast-end">
+
+  <div class="alert alert-warning alert-soft">
+    <span>${toastData}</span>
+  </div>
+</div>`
+
+
+
+document.body.appendChild(alertContainer)
+setTimeout(()=>{alertContainer.remove()},2000)
+
+
+
+}
+
