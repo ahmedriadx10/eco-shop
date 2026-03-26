@@ -5,4 +5,4 @@
 Visit [ECO SHOP](https://your-eco-shop.netlify.app/)
 
 
-![ECO SHOP HOME ](readme/assets/eco-homepage.png>)
+![ECO SHOP HOME ](assets/eco-homepage.png>)
