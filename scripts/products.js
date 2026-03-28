@@ -351,7 +351,7 @@ productsContainer.addEventListener("click", (e) => {
     const { id, name } = productsMiniDetails;
 
     specificProduct(Number(id));
-    showToastify(`<span class='font-bold text-md'>${name}</span> <span class='font-medium'>Add to cart successfull !</span>`, true);
+    showToastify(`<span class='font-bold text-md'>${name}</span> <span class='font-medium'>Add to cart successfull !</span>`, 'cartAdd');
   }
 });
 
@@ -371,13 +371,13 @@ cartStore.addEventListener("click", (e) => {
 
     localStorage.setItem("cartStore", JSON.stringify(localStorageCartData));
 
-    showToastify(`<span class='font-bold text-md'>${name}</span> <span class='font-medium'>removed from your cart</span>`);
+    showToastify(`<span class='font-bold text-md'>${name}</span> <span class='font-medium'>removed from your cart</span>`,'cartDelete');
     renderCart(localStorageCartData);
   }
 });
 
 function showToastify(toastData, success) {
-  if (success) {
+  if (success==='cartAdd') {
     const alertContainer = document.createElement("div");
     alertContainer.innerHTML = `
 <div class="toast  toast-end toast-middle">
@@ -394,6 +394,7 @@ function showToastify(toastData, success) {
     return;
   }
 
+else if(success==='cartDelete'){
   const alertContainer = document.createElement("div");
   alertContainer.innerHTML = `
 <div class="toast toast-end toast-middle">
@@ -407,6 +408,24 @@ function showToastify(toastData, success) {
   setTimeout(() => {
     alertContainer.remove();
   }, 2000);
+  return
+}
+
+const alertContainer = document.createElement("div");
+  alertContainer.innerHTML = `
+<div class="toast toast-end toast-middle">
+
+  <div class="alert alert-success ">
+    <span>${toastData}</span>
+  </div>
+</div>`;
+
+  document.body.appendChild(alertContainer);
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 2000);
+
+
 }
 
 function allProductsLoading(loading) {
@@ -465,3 +484,17 @@ function cartView(destination){
   elementGive('cart-btn').classList.add('btn-info')
 
 }
+
+
+elementGive('order-btn').addEventListener('click',()=>{
+
+
+showToastify('Order successfully confirmed')
+localStorageCartData.length=0
+localStorage.setItem('cartStore',JSON.stringify(localStorageCartData))
+
+renderCart(localStorageCartData)
+
+
+
+})
