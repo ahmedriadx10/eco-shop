@@ -46,6 +46,8 @@ async function getAllProductsData() {
 }
 
 function renderProductsDataUI(x) {
+
+
   productsContainer.innerHTML = "";
 
   x.forEach((card) => {
@@ -84,6 +86,9 @@ function renderProductsDataUI(x) {
 
     productsContainer.appendChild(cardDiv);
   });
+
+
+   
 }
 
 getAllProductsData();
@@ -113,13 +118,14 @@ categorButtonsContainer.addEventListener("click", (e) => {
 });
 
 async function categoryWiseProducts(categoryName) {
+  allProductsLoading(true)
   const take = await fetch(
     `https://dummyjson.com/products/category/${categoryName}`,
   );
   const convertData = await take.json();
 
   const { products } = convertData;
-
+ allProductsLoading(false)
   renderProductsDataUI(products);
 }
 
