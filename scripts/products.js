@@ -8,7 +8,7 @@ const modalParent = elementGive("card_modal");
 const modalInner = elementGive("details-show");
 const userCartTotal = elementGive("cart-total");
 const navCartCount = elementGive("cart-count-nav");
-
+const orderBtn=elementGive('order-btn')
 let localStorageCartData = JSON.parse(localStorage.getItem("cartStore")) || [];
 async function getCategoryList() {
   categoryLoading(true);
@@ -206,6 +206,9 @@ function renderCart(x) {
     cartStore.appendChild(div);
     div.className = "col-span-full text-center space-y-5";
     navCartCount.innerText = `+0`;
+
+orderBtn.setAttribute('disabled',true)
+
     return;
   }
 
@@ -225,8 +228,12 @@ function renderCart(x) {
 
   `;
     cartStore.appendChild(cart);
-  });
+  }
 
+
+
+);
+orderBtn.removeAttribute('disabled')
   // const getCartDataFromStorage=JSON.parse(localStorage.getItem('cartStore'))
   const calcTotal = localStorageCartData.reduce(
     (acc, curr) => acc + curr.price * curr.quantity,
@@ -352,6 +359,7 @@ productsContainer.addEventListener("click", (e) => {
 
     specificProduct(Number(id));
     showToastify(`<span class='font-bold text-md'>${name}</span> <span class='font-medium'>Add to cart successfull !</span>`, 'cartAdd');
+    
   }
 });
 
@@ -486,14 +494,19 @@ function cartView(destination){
 }
 
 
-elementGive('order-btn').addEventListener('click',()=>{
+orderBtn.addEventListener('click',()=>{
 
 
-showToastify('Order successfully confirmed')
+if(localStorageCartData.length>0){
+
+  showToastify('Order successfully confirmed')
 localStorageCartData.length=0
 localStorage.setItem('cartStore',JSON.stringify(localStorageCartData))
 
 renderCart(localStorageCartData)
+}
+
+
 
 
 
